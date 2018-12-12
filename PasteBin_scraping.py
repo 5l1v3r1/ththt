@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from datetime import datetime
-import requests, json, time, math, csv, logging
+import requests, json, time, math, csv, logging, os
 
 PostLimit = "5"
 
@@ -30,7 +30,10 @@ listExT = MaxSizeList(PostLimit)
 listSynT = MaxSizeList(PostLimit)
 
 now = datetime.now()
-FileName = "PasteBin_" + str(now.strftime('%Y-%m-%d_%H')) + ".csv"
+if not os.path.exists(now.strftime('%Y/%m/%d')):
+	os.makedirs(now.strftime('%Y/%m/%d'))
+
+FileName = str(now.strftime('%Y/%m/%d'))+"/PasteBin_" + str(now.strftime('%Y-%m-%d_%H')) + ".csv"
 
 csvFile = open(FileName, 'a')
 writer = csv.writer(csvFile)
