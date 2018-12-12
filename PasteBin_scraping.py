@@ -3,7 +3,7 @@
 from datetime import datetime
 import requests, json, time, math, csv, logging, os
 
-PostLimit = "5"
+PostLimit = "100"
 
 def convert_size(size_bytes):
    if size_bytes == 0:
@@ -53,14 +53,14 @@ while True:
 			if jsonpost["title"] == "":
 				listTitleT.append("Untitled")
 			else:
-				listTitleT.append(jsonpost["title"])
+				listTitleT.append(str(jsonpost["title"]))
 			listDateT.append(datetime.utcfromtimestamp(int(jsonpost["date"])).strftime('%Y-%m-%d %H:%M:%S'))
 			listSizeT.append(int(jsonpost["size"]))
 			if jsonpost["expire"] == "0":
 				listExT.append("NEVER")
 			else:
 				listExT.append(datetime.utcfromtimestamp(int(jsonpost["expire"])).strftime('%Y-%m-%d %H:%M:%S'))
-			listSynT.append(jsonpost["syntax"])
+			listSynT.append(str(jsonpost["syntax"]))
 
 			# Add in csv file
 			writer.writerow([listDateT[-1],listKeyT[-1],listTitleT[-1],listSynT[-1],listSizeT[-1],listExT[-1]])
