@@ -24,4 +24,7 @@ $ sudo chmod +x /usr/local/bin/docker-compose
 ## Docker-compose
 # the unprivileged elasticsearch user is used within the Elasticsearch image, therefore the mounted data directory must be owned by the uid 1000.
 
+## Pastebin Script
+$ apt-get install jq
+
 # Filebeat ??
