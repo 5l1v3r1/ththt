@@ -5,15 +5,6 @@ import requests, json, time, math, logging, os
 
 PostLimit = "100"
 
-def convert_size(size_bytes):
-   if size_bytes == 0:
-       return "0B"
-   size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
-   i = int(math.floor(math.log(size_bytes, 1024)))
-   p = math.pow(1024, i)
-   s = round(size_bytes / p, 2)
-   return "%s %s" % (s, size_name[i])
-
 class MaxSizeList(list):
     def __init__(self, maxlen):
         self._maxlen = maxlen
@@ -23,18 +14,12 @@ class MaxSizeList(list):
         super(MaxSizeList, self).append(element)
 
 listKeyT = MaxSizeList(PostLimit)
-listTitleT = MaxSizeList(PostLimit)
-listDateT = MaxSizeList(PostLimit)
-listSizeT = MaxSizeList(PostLimit)
-listExT = MaxSizeList(PostLimit)
-listSynT = MaxSizeList(PostLimit)
 
 now = datetime.now()
-if not os.path.exists(now.strftime('%Y/%m/%d')):
-	os.makedirs(now.strftime('%Y/%m/%d'))
+if not os.path.exists(now.strftime('logs/%Y/%m/%d')):
+	os.makedirs(now.strftime('logs/%Y/%m/%d'))
 
-FileName = str(now.strftime('%Y/%m/%d'))+"/pastebin_" + str(now.strftime('%Y%m%d_%Hh')) + ".log"
-
+FileName = str(now.strftime('logs/%Y/%m/%d'))+"/pastebin_" + str(now.strftime('%Y%m%d_%Hh')) + ".log"
 OutputFile = open(FileName, 'a')
 
 while True:
@@ -51,7 +36,7 @@ while True:
 			listKeyT.append(jsonpost["key"])
 
 			# Add in log file
-			OutputFile.write(str(jsonpost)+'\n')
+			OutputFile.write(json.dumps(jsonpost)+'\n')
 
 	logging.basicConfig(filename='pastebin.log',level=logging.INFO,format='%(asctime)s %(levelname)-8s %(message)s',datefmt='%Y-%m-%d %H:%M:%S%p')
 	logging.info("Loop Completed | " + str(NbPosts) + " Posts")
