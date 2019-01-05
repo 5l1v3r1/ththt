@@ -25,10 +25,8 @@ $ sudo chmod +x /usr/local/bin/docker-compose
 # the unprivileged elasticsearch user is used within the Elasticsearch image, therefore the mounted data directory must be owned by the uid 1000.
 
 ## Pastebin Script
-$ apt-get install jq
-
-## Yara rules
-$ wget https://github.com/plusvic/yara/archive/v3.4.0.tar.gz (see last version on https://github.com/plusvic/yara/releases)
+# Yara rules
+$ wget https://github.com/VirusTotal/yara/archive/v3.8.1.tar.gz (last releases on: https://github.com/VirusTotal/yara/releases)
 $ tar -xvzf v3.4.0.tar.gz
 $ cd yara-3.4.0/
 $ ./bootstrap.sh
@@ -39,7 +37,7 @@ $ make
 $ sudo make install
 
 $ apt-get install python3-pip
-$ pip install yara-python
+$ pip3 install yara-python
 $ sudo -H pip3 install -U pip
 $ sudo -H pip3 install -U yara-python
 
