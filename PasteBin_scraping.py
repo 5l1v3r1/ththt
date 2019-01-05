@@ -1,7 +1,13 @@
 #!/usr/bin/python3
 
+import json
+import logging
+import math
+import os
+import requests
+import time
+import yara
 from datetime import datetime
-import requests, json, time, math, logging, os
 
 PostLimit = "100"
 
@@ -22,6 +28,9 @@ if not os.path.exists(now.strftime('logs/%Y/%m/%d')):
 FileName = str(now.strftime('logs/%Y/%m/%d'))+"/pastebin_" + str(now.strftime('%Y%m%d_%Hh')) + ".log"
 OutputFile = open(FileName, 'a')
 
+# YARA Rules
+rules = yara.compile('yara/rules.yar')
+
 while True:
 	# Every 60sec
 	posts = requests.get("https://scrape.pastebin.com/api_scraping.php?limit=" + PostLimit).text
@@ -33,7 +42,17 @@ while True:
 		# If pastebin.key not know add it to our DB
 		if jsonpost["key"] not in listKeyT:
 			NbPosts+=1
+			match=""
 			listKeyT.append(jsonpost["key"])
+
+			# Get the rawpaste for each new pastebin key 
+			rawpastedata = requests.get("https://scrape.pastebin.com/api_scrape_item.php?i=" + jsonpost["key"]).text
+			# if match yara rule store the paste in the log
+			match=rules.match(data=rawpastedata)
+
+			if match:
+				jsonpost["rawpaste"] = rawpastedata
+				jsonpost["yararule"] = str(match)
 
 			# Add in log file
 			OutputFile.write(json.dumps(jsonpost)+'\n')

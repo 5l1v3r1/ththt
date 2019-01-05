@@ -27,4 +27,21 @@ $ sudo chmod +x /usr/local/bin/docker-compose
 ## Pastebin Script
 $ apt-get install jq
 
+## Yara rules
+$ wget https://github.com/plusvic/yara/archive/v3.4.0.tar.gz (see last version on https://github.com/plusvic/yara/releases)
+$ tar -xvzf v3.4.0.tar.gz
+$ cd yara-3.4.0/
+$ ./bootstrap.sh
+	--> error: ./bootstrap.sh: 2: ./bootstrap.sh: autoreconf: not found
+	$ apt-get install autoconf libtool 
+$ ./configure
+$ make
+$ sudo make install
+
+$ apt-get install python3-pip
+$ pip install yara-python
+$ sudo -H pip3 install -U pip
+$ sudo -H pip3 install -U yara-python
+
+
 # Filebeat ??
