@@ -3,7 +3,7 @@
 	PURPOSE = Match possible mail leakages in pastes
 */
 
-rule leaks : leaks 
+rule mails : mails 
 {
 
 	meta:
