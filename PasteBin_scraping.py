@@ -21,18 +21,18 @@ class MaxSizeList(list):
 
 listKeyT = MaxSizeList(PostLimit)
 
-now = datetime.now()
-if not os.path.exists(now.strftime('logs/%Y/%m/%d')):
-	os.makedirs(now.strftime('logs/%Y/%m/%d'))
-
-FileName = str(now.strftime('logs/%Y/%m/%d'))+"/pastebin_" + str(now.strftime('%Y%m%d_%Hh')) + ".log"
-OutputFile = open(FileName, 'a')
-
 # YARA Rules
 rules = yara.compile('yara/rules.yar')
 
 while True:
 	# Every 60sec
+	now = datetime.now()
+	if not os.path.exists(now.strftime('logs/%Y/%m/%d')):
+		os.makedirs(now.strftime('logs/%Y/%m/%d'))
+
+	FileName = str(now.strftime('logs/%Y/%m/%d'))+"/pastebin_" + str(now.strftime('%Y%m%d_%Hh')) + ".log"
+	OutputFile = open(FileName, 'a')
+	
 	posts = requests.get("https://scrape.pastebin.com/api_scraping.php?limit=" + PostLimit).text
 	# Load response as a Json format 
 	jsonpostslist = json.loads(posts)
@@ -60,9 +60,8 @@ while True:
 	logging.basicConfig(filename='pastebin.log',level=logging.INFO,format='%(asctime)s %(levelname)-8s %(message)s',datefmt='%Y-%m-%d %H:%M:%S%p')
 	logging.info("Loop Completed | " + str(NbPosts) + " Posts")
 
+	OutputFile.close()
 	time.sleep(60)
-
-OutputFile.close()
 
 # https://github.com/Tu5k4rr/PastaBean/blob/master/PastaBean.py
 
