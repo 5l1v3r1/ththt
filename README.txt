@@ -43,3 +43,6 @@ $ sudo -H pip3 install -U yara-python
 
 
 # Filebeat ??
+
+# addd enough vm memory to run elastic containers
+#$sysctl -w vm.max_map_count=262144

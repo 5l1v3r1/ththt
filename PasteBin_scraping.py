@@ -33,9 +33,8 @@ while True:
 	FileName = str(now.strftime('logs/%Y/%m/%d'))+"/pastebin_" + str(now.strftime('%Y%m%d_%Hh')) + ".log"
 	OutputFile = open(FileName, 'a')
 	
-	posts = requests.get("https://scrape.pastebin.com/api_scraping.php?limit=" + PostLimit).text
 	# Load response as a Json format 
-	jsonpostslist = json.loads(posts)
+	jsonpostslist = requests.get("https://scrape.pastebin.com/api_scraping.php?limit=" + PostLimit).json()
 
 	NbPosts = 0 
 	for jsonpost in jsonpostslist:
