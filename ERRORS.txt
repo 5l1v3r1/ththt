@@ -3,3 +3,11 @@ ERROR: Couldn't connect to Docker daemon at http+docker://localhost - is it runn
 
 If it's at a non-standard location, specify the URL with the DOCKER_HOST environment variable.
 --> $ service docker restart
+
+# ERROR 2
+dockerd[6546]: time="XXXXX" level=warning msg="Your kernel does not support swap limit capabilities,or the cgroup is not mounted. Memory limited without swap."
+
+you should enable both swap and memory accounting on kernel boot
+--> $ add this "GRUB_CMDLINE_LINUX_DEFAULT="cgroup_enable=memory swapaccount=1"" options in /etc/default/grub
+--> then $ /usr/sbin/update-grub && reboot
+

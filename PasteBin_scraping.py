@@ -47,8 +47,11 @@ while True:
 			# Get the rawpaste for each new pastebin key 
 			rawpastedata = requests.get("https://scrape.pastebin.com/api_scrape_item.php?i=" + jsonpost["key"]).text
 			# if match yara rule store the paste in the log
-			match=rules.match(data=rawpastedata)
-
+			try:
+				match=rules.match(data=rawpastedata)
+			except exception as yaraerror:
+				logging.error("ERROR | YARA Rule exception:" + str(yaraerror))
+				continue
 			if match:
 				jsonpost["rawpaste"] = rawpastedata
 				jsonpost["yararule"] = str(match)
