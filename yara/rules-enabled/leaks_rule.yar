@@ -18,6 +18,7 @@ rule leaks : leaks
 	strings:
 		$str1 = "leak" fullword nocase
 		$str2 = "hack" fullword nocase 
+		$str3 = "dox" fullword nocase 
 	condition:
-		$str1 or $str2
+		$str1 or $str2 or $str3
 }

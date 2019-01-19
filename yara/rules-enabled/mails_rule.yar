@@ -18,5 +18,5 @@ rule mails : mails
 	strings:
 		$str1 = /\b[\w-]+@[\w-]+\.[a-zA-Z]+\:\S+\b/ 
 	condition:
-		#str1 > 10
+		#str1 > 20
 }
