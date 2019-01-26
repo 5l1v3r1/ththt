@@ -21,14 +21,14 @@ class MaxSizeList(list):
 
 listKeyT = MaxSizeList(PostLimit)
 
-# YARA Rules
-rules = yara.compile('yara/rules.yar')
-
 while True:
 	# Every 60sec
 	now = datetime.now()
 	if not os.path.exists(now.strftime('logs/%Y/%m/%d')):
 		os.makedirs(now.strftime('logs/%Y/%m/%d'))
+
+	# YARA Rules
+	rules = yara.compile('yara/rules.yar')
 
 	FileName = str(now.strftime('logs/%Y/%m/%d'))+"/pastebin_" + str(now.strftime('%Y%m%d_%Hh')) + ".log"
 	OutputFile = open(FileName, 'a')
@@ -49,7 +49,7 @@ while True:
 			# if match yara rule store the paste in the log
 			try:
 				match=rules.match(data=rawpastedata)
-			except exception as yaraerror:
+			except Exception as yaraerror:
 				logging.error("ERROR | YARA Rule exception:" + str(yaraerror))
 				continue
 			if match:
@@ -65,13 +65,6 @@ while True:
 	OutputFile.close()
 	time.sleep(60)
 
+
 # https://github.com/Tu5k4rr/PastaBean/blob/master/PastaBean.py
-
-# https://tryolabs.com/blog/2015/02/17/python-elasticsearch-first-steps/
-
 # https://github.com/kevthehermit/PasteHunter
-# Upgrade with:
-# pastebin.com
-# dumpz.org
-# gist.github.com
-# paste.ee

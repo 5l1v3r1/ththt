@@ -1,9 +1,9 @@
 /*
-	RULENAME = Leaks
-	PURPOSE = Match possible leakages in pastes
+	RULENAME = Info
+	PURPOSE = Match possible intersting information in pastes
 */
 
-rule leaks : leaks 
+rule info : info
 {
 
 	meta:
@@ -13,12 +13,10 @@ rule leaks : leaks
 		tlp = "white"
 		author = "@zemelusa"
 		created_on = "2019-01-05"
-		last_updated = "2019-01-07"
+		last_updated = "2019-01-26"
 
 	strings:
-		$str1 = "leak" fullword nocase
-		$str2 = "hack" fullword nocase 
-		$str3 = "dox" fullword nocase 
+		$info = /\b(leak(s|eage|ing)|hack(s|ing)?|ransomware(s)?|attack(s)?|bank(s|ing)?|wallet(s)?|coin(s)?)\b/ nocase
 	condition:
-		$str1 or $str2 or $str3
+		$info
 }
