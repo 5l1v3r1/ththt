@@ -16,7 +16,7 @@ rule base64 : base64
 		last_updated = "2019-01-26"
 
 	strings:
-		$base64 = /^([\w\d+\/]{4}){3,}([\w\d+\/]{2}==|[\w\d+\/]{3}=)?$/
+		$base64 = /([\w\d+\/]{4}){3,}([\w\d+\/]{2}==|[\w\d+\/]{3}=)?/
 	condition:
 		$base64
 }

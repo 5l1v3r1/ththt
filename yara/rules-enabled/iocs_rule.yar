@@ -21,7 +21,6 @@ rule iocs : iocs
 		$sha256 = /\b[a-fA-F\d]{64}\b/
 		$ipv4 = /\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/
 		$domain = /\S+\.\S+/
-		$ioc = /(ransomware|trojan|crypto|hack|APT|Emotet|Trickbot|ioc)/
 	condition:
-		(($md5 or $sha1 or $sha256) and (#ipv4 > 10 or #domain > 10)) or $ioc
+		($md5 or $sha1 or $sha256) and (#ipv4 > 10 or #domain > 10)
 }
