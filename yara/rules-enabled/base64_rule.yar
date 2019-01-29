@@ -13,10 +13,10 @@ rule base64 : base64
 		tlp = "white"
 		author = "@zemelusa"
 		created_on = "2019-01-26"
-		last_updated = "2019-01-26"
+		last_updated = "2019-01-28"
 
 	strings:
-		$base64 = /^([\w\d+\/]{4}){3,}([\w\d+\/]{2}==|[\w\d+\/]{3}=)?$/
+		$base64 = /([A-Za-z0-9+\/]{4}){3,}([A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?/
 	condition:
 		$base64
 }

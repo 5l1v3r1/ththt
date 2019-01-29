@@ -46,15 +46,33 @@ while True:
 
 			# Get the rawpaste for each new pastebin key 
 			rawpastedata = requests.get("https://scrape.pastebin.com/api_scrape_item.php?i=" + jsonpost["key"]).text
+			
+			# if match yara rule in the paste's title
+			try:
+				match=rules.match(data=jsonpost["title"])
+			except Exception as yaraerror:
+				logging.error("ERROR | YARA Rule exception in the title:" + str(yaraerror))
+				continue
+
+			if match:
+				jsonpost["yararule"] = str(match)
+			else:
+				jsonpost["yararule"] = "others"
+
 			# if match yara rule store the paste in the log
 			try:
 				match=rules.match(data=rawpastedata)
 			except Exception as yaraerror:
-				logging.error("ERROR | YARA Rule exception:" + str(yaraerror))
+				logging.error("ERROR | YARA Rule exception in the paste:" + str(yaraerror))
 				continue
+
 			if match:
-				jsonpost["rawpaste"] = rawpastedata
 				jsonpost["yararule"] = str(match)
+			else:
+				jsonpost["yararule"] = "others"
+
+			# save all pastes
+			jsonpost["rawpaste"] = rawpastedata
 
 			# Add in log file
 			OutputFile.write(json.dumps(jsonpost)+'\n')

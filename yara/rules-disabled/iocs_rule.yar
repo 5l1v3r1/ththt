@@ -13,10 +13,15 @@ rule iocs : iocs
 		tlp = "white"
 		author = "@zemelusa"
 		created_on = "2019-01-05"
-		last_updated = "2019-01-28"
+		last_updated = "2019-01-26"
 
 	strings:
+		$md5 = /\b[a-fA-F\d]{32}\b/
+		$sha1 = /\b[a-fA-F\d]{40}\b/
+		$sha256 = /\b[a-fA-F\d]{64}\b/
+		$ipv4 = /\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/
+		$domain = /\S+\.\S+/
 		$ioc = /(ransomware|trojan|crypto|hack|APT|Emotet|Trickbot|ioc)/
 	condition:
-		$ioc
+		(($md5 or $sha1 or $sha256) and (#ipv4 > 10 or #domain > 10)) or $ioc
 }
