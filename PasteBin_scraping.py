@@ -29,6 +29,7 @@ while True:
 
 	# YARA Rules
 	rules = yara.compile('yara/rules.yar')
+	rule_ioc = yara.compile('yara/rules-enabled/iocs_rule.yar')
 
 	FileName = str(now.strftime('logs/%Y/%m/%d'))+"/pastebin_" + str(now.strftime('%Y%m%d_%Hh')) + ".log"
 	OutputFile = open(FileName, 'a')
@@ -42,6 +43,7 @@ while True:
 		if jsonpost["key"] not in listKeyT:
 			NbPosts+=1
 			match=""
+			match_title=""
 			listKeyT.append(jsonpost["key"])
 
 			# Get the rawpaste for each new pastebin key 
@@ -49,15 +51,10 @@ while True:
 			
 			# if match yara rule in the paste's title
 			try:
-				match=rules.match(data=jsonpost["title"])
+				match_title=rule_ioc.match(data=jsonpost["title"])
 			except Exception as yaraerror:
 				logging.error("ERROR | YARA Rule exception in the title:" + str(yaraerror))
 				continue
-
-			if match:
-				jsonpost["yararule"] = str(match)
-			else:
-				jsonpost["yararule"] = "others"
 
 			# if match yara rule store the paste in the log
 			try:
@@ -66,8 +63,10 @@ while True:
 				logging.error("ERROR | YARA Rule exception in the paste:" + str(yaraerror))
 				continue
 
-			if match:
-				jsonpost["yararule"] = str(match)
+			if match_title:
+				jsonpost["yararule"] = str(match_title)
+			elif match:
+				jsonpost["yararule"] = str(match[0])
 			else:
 				jsonpost["yararule"] = "others"
 

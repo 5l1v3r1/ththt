@@ -16,7 +16,7 @@ rule iocs : iocs
 		last_updated = "2019-01-28"
 
 	strings:
-		$ioc = /(ransomware|trojan|crypto|hack|APT|Emotet|Trickbot|ioc)/
+		$ioc = /(ransomware|trojan|crypto|APT|Emotet|Trickbot|ioc)/
 	condition:
 		$ioc
 }

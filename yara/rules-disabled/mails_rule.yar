@@ -16,7 +16,7 @@ rule mails : mails
 		last_updated = "2019-01-26"
 
 	strings:
-		$emailaddr = /\b[\w-]+@[\w-]+\.[\w-]+\:\S+\b/ 
+		$emailaddr = /\b\S+@\S+\.[\w-]+(\:|\||\t)\S+\b/ 
 	condition:
-		#emailaddr > 20
+		#emailaddr > 10
 }
