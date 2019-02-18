@@ -189,19 +189,19 @@ rule fanfic : fanfic
 		created_on = "2019-01-05"
 		last_updated = "2019-01-28"
 	strings:
-		$fanfic = /^[a-zA-Z0-9 .,!;:\(\)\[\]\-?'"\n]{500,}/ 
+		$fanfic = /^[a-zA-Z0-9 .,!;:\(\)\[\]\-?'"\n]{500,}$/ 
 	condition:
 		$fanfic
 }
 
-rule latin : latin 
+rule asciichar : asciichar 
 {
 	meta:
-		description = "Rule for matching possible Latin keyboard"
+		description = "Rule for matching possible ASCII char"
 		created_on = "2019-01-05"
 		last_updated = "2019-01-28"
 	strings:
-		$latin = /^[a-zA-Z0-9 &é"'(-è_çà)=^$*!:;,œŒ°+¨£%µ§/.?“´~#{\[|\^@\]}ễ²³¡÷×¿\n]+/ 
+		$asciichr = /^[!"#$%&'()*+,-.\/0-9 :;<=>\?@1-Za-z\[\]\\\^_`{|}~\n]+$/ 
 	condition:
-		$latin
+		$asciichr
 }
