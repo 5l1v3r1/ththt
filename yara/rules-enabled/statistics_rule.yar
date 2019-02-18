@@ -11,6 +11,21 @@ rule mails : mails
 		#emailaddr > 10
 }
 
+rule certificates : certificates 
+{
+
+	meta:
+		description = "Rule for matching PGP/Certificates"
+		created_on = "2019-02-18"
+		last_updated = "2019-02-18"
+	strings:
+		$cert = "BEGIN PGP PRIVATE KEY" nocase
+		$cert_1 = "BEGIN CERTIFICATE" nocase
+	condition:
+		any of them
+}
+
+
 rule dox : dox
 {
 	meta:
@@ -18,7 +33,7 @@ rule dox : dox
 		created_on = "2019-01-05"
 		last_updated = "2019-01-28"
 	strings:
-		$dox = "DOX" fullword nocase
+		$dox = " DOX " nocase
 	condition:
 		$dox
 }
@@ -29,9 +44,10 @@ rule darknet : darknet
 	meta:
 		description = "Rule for matching darknet related websites"
 		created_on = "2019-01-05"
-		last_updated = "2019-01-28"
+		last_updated = "2019-02-18"
 	strings:
 		$darknet = /\S+\.onion/
+		$darknet_1 = " TOR " nocase
 	condition:
 		any of them
 }
@@ -44,8 +60,7 @@ rule porn : porn
 		created_on = "2019-01-05"
 		last_updated = "2019-01-28"
 	strings:
-		$porn = "pornhub"
-		$porn_1 = "porn" fullword nocase
+		$porn = "porn" fullword nocase
 	condition:
 		any of them
 }
@@ -74,11 +89,11 @@ rule streaming : streaming
 		$streaming = "streaming" nocase
 		$streaming_1 = "#EXTINF:"
 		$streaming_2 = "SPORT TV" fullword nocase
-		$streaming_3 = "streamtv"
+		$streaming_3 = "streamtv" nocase
 		$streaming_4 = "#EXTM3U" fullword
-		$streaming_5 = "watch2hd"
-		$streaming_6 = "live_tv"
-		$streaming_7 = "streamable"
+		$streaming_5 = "watch2hd" nocase
+		$streaming_6 = "live_tv" nocase
+		$streaming_7 = "streamable" nocase
 	condition:
 		any of them
 }
@@ -89,10 +104,11 @@ rule torrent : torrent
 	meta:
 		description = "Rule for matching possible torrents"
 		created_on = "2019-01-05"
-		last_updated = "2019-01-28"
+		last_updated = "2019-02-18"
 	strings:
 		$torrent = "torrent" nocase
 		$torrent_1 = /\S+\.mkv/
+		$torrent_2 = " p2p " nocase
 	condition:
 		any of them
 }
@@ -142,6 +158,18 @@ rule linux : linux
 		any of them
 }
 
+rule digit : digit
+{
+	meta:
+		description = "Rule for matching random numbers"
+		created_on = "2019-01-05"
+		last_updated = "2019-01-28"
+	strings:
+		$number = /^\d+$/
+	condition:
+		$number
+}
+
 rule base64 : base64
 {
 	meta:
@@ -149,9 +177,9 @@ rule base64 : base64
 		created_on = "2019-01-05"
 		last_updated = "2019-01-28"
 	strings:
-		$base64 = /^[\w\d\!\-\(\)\+\/=]{100,}$/
+		$base64 = /^[a-zA-Z0-9+\/=]+$/
 	condition:
-		any of them
+		$base64
 }
 
 rule fanfic : fanfic 
@@ -161,20 +189,19 @@ rule fanfic : fanfic
 		created_on = "2019-01-05"
 		last_updated = "2019-01-28"
 	strings:
-		$fanfic = /^[a-zA-Z .,!;:\(\)\[\]\-?'"\n]{500,}/ 
+		$fanfic = /^[a-zA-Z0-9 .,!;:\(\)\[\]\-?'"\n]{500,}/ 
 	condition:
-		any of them
+		$fanfic
 }
 
-rule text : text 
+rule latin : latin 
 {
 	meta:
-		description = "Rule for matching possible simple text"
+		description = "Rule for matching possible Latin keyboard"
 		created_on = "2019-01-05"
 		last_updated = "2019-01-28"
 	strings:
-		$text = /^[a-zA-Z .,!;:\(\)\[\]\-?'"\n]+/ 
+		$latin = /^[a-zA-Z0-9 &é"'(-è_çà)=^$*!:;,œŒ°+¨£%µ§/.?“´~#{\[|\^@\]}ễ²³¡÷×¿\n]+/ 
 	condition:
-		any of them
+		$latin
 }
-
