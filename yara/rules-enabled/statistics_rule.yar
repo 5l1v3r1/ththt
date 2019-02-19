@@ -182,6 +182,18 @@ rule base64 : base64
 		$base64
 }
 
+rule encoded : encoded
+{
+	meta:
+		description = "Rule for matching encoded text"
+		created_on = "2019-02-18"
+		last_updated = "2019-02-18"
+	strings:
+		$encoded = /^[a-zA-Z0-9+\/=!()]+$/
+	condition:
+		$encoded
+}
+
 rule fanfic : fanfic 
 {
 	meta:
