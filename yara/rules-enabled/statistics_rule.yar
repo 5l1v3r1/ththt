@@ -170,6 +170,42 @@ rule digit : digit
 		$number
 }
 
+rule ip : ip
+{
+	meta:
+		description = "Rule for matching IP lists"
+		created_on = "2019-02-19"
+		last_updated = "2019-02-19"
+	strings:
+		$ipv4 = /\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/
+	condition:
+		#ipv4 > 10
+}
+
+rule domain : domain
+{
+	meta:
+		description = "Rule for matching domain lists"
+		created_on = "2019-02-19"
+		last_updated = "2019-02-19"
+	strings:
+		$domain = /\bh..ps?:\/\/\S+\.\S+\b/
+	condition:
+		#domain > 10
+}
+
+rule word : word
+{
+	meta:
+		description = "Rule for matching a simple word"
+		created_on = "2019-02-19"
+		last_updated = "2019-02-19"
+	strings:
+		$word = /^[a-zA-Z0-9]+$/
+	condition:
+		$word
+}
+
 rule base64 : base64
 {
 	meta:
@@ -177,7 +213,7 @@ rule base64 : base64
 		created_on = "2019-01-05"
 		last_updated = "2019-01-28"
 	strings:
-		$base64 = /^[a-zA-Z0-9+\/=]+$/
+		$base64 = /^[a-zA-Z0-9+\/=]{32,}$/
 	condition:
 		$base64
 }
