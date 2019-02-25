@@ -37,7 +37,7 @@ while True:
 	# Load response as a Json format 
 	jsonpostslist = requests.get("https://scrape.pastebin.com/api_scraping.php?limit=" + PostLimit).json()
 
-	NbPosts = 0 
+	NbPosts = 0
 	for jsonpost in jsonpostslist:
 		# If pastebin.key not know add it to our DB
 		if jsonpost["key"] not in listKeyT:
@@ -56,7 +56,8 @@ while True:
 				logging.error("ERROR | YARA Rule exception in the title:" + str(yaraerror))
 				continue
 
-			# if match yara rule store the paste in the log
+			# if match yara rule store the paste in the log			elif match:
+
 			try:
 				match=rules.match(data=rawpastedata)
 			except Exception as yaraerror:
@@ -81,7 +82,3 @@ while True:
 
 	OutputFile.close()
 	time.sleep(60)
-
-
-# https://github.com/Tu5k4rr/PastaBean/blob/master/PastaBean.py
-# https://github.com/kevthehermit/PasteHunter

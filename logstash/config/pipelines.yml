@@ -1,0 +1,4 @@
+- pipeline.id: pastebin
+  path.config: "/usr/share/logstash/pipeline/pastebin.conf"
+- pipeline.id: virustotal
+  path.config: "/usr/share/logstash/pipeline/virustotal.conf"
