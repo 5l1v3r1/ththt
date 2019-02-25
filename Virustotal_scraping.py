@@ -49,8 +49,6 @@ while True:
 			virustotalsample['votes'] = jsonsample["attributes"]["votes"]
 			virustotalsample['author'] = jsonsample["relationships"]["author"]["data"]["id"]
 
-
-
 			# Add in log file
 			OutputFile.write(json.dumps(virustotalsample)+'\n')
 
